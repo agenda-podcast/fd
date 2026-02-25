@@ -1,0 +1,4 @@
+# GitHub Pages configuration
+# Source: main branch, /docs folder
+# Enable via: Settings > Pages > Source > Deploy from branch > main > /docs
+# No Jekyll processing needed for this static site

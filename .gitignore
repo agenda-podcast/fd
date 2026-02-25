@@ -1,0 +1,41 @@
+# FAVELLA DEVELOPMENT .gitignore
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local env files (never commit secrets)
+.env
+.env.local
+*.local
+
+# Node (if any tooling is added)
+node_modules/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Temporary files
+/tmp/
+*.tmp
+*.log
+
+# Agent memory (private session data)
+# Remove these lines to commit memory and share across team.
+memory/agents/*.json
+memory/shared/decisions.json
+memory/shared/work_items.json

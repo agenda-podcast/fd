@@ -1,0 +1,149 @@
+name: FD CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+
+  # ============================================================
+  # JOB 1: Policy Checks
+  # Enforces FD engineering principles:
+  #   - 500-line limit on non-table logic/code files
+  #   - ASCII-only in code and docs
+  #   - Required documentation and agent files present
+  # ============================================================
+  policy-checks:
+    name: FD Policy Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Make tools executable
+        run: chmod +x tools/*.sh
+
+      - name: Check 500-line limit
+        run: bash tools/check_line_limit.sh .
+
+      - name: Check ASCII-only
+        run: bash tools/check_ascii.sh .
+
+      - name: Check required docs and agent files present
+        run: bash tools/check_required_docs.sh
+
+  # ============================================================
+  # JOB 2: Python Agent Syntax Check
+  # Verifies all agent Python files parse without errors.
+  # ============================================================
+  agent-syntax-check:
+    name: Agent Python Syntax
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Check Python syntax (no dependencies needed)
+        run: |
+          failed=0
+          for f in agents/*.py fd-agent.py; do
+            python3 -m py_compile "$f" && echo "OK: $f" || { echo "FAIL: $f"; failed=$((failed+1)); }
+          done
+          echo ""
+          echo "Python syntax check: $failed failures."
+          [ "$failed" -eq 0 ]
+
+  # ============================================================
+  # JOB 3: WI Reference Check (PR only)
+  # Verifies WI IDs in PR title/body exist in /backlog/work_items/
+  # ============================================================
+  wi-reference-check:
+    name: WI Reference Check
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Make tools executable
+        run: chmod +x tools/*.sh
+
+      - name: Extract and verify WI IDs
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          combined="$PR_TITLE $PR_BODY"
+          wi_ids=$(echo "$combined" | grep -oE 'WI-[0-9]{3,}' | sort -u | tr '\n' ' ' || true)
+          echo "Extracted WI IDs: $wi_ids"
+          if [ -z "$wi_ids" ]; then
+            echo "WARNING: No WI-### IDs found in PR title or body."
+            exit 1
+          fi
+          bash tools/check_wi_reference.sh "$wi_ids"
+
+  # ============================================================
+  # JOB 4: E2E Update Check (behavior-change label)
+  # ============================================================
+  e2e-update-check:
+    name: E2E Verification Update Check
+    runs-on: ubuntu-latest
+    if: >
+      github.event_name == 'pull_request' &&
+      contains(github.event.pull_request.labels.*.name, 'behavior-change')
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check E2E_VERIFICATION.md was updated
+        run: |
+          base="${{ github.event.pull_request.base.sha }}"
+          head="${{ github.event.pull_request.head.sha }}"
+          changed=$(git diff --name-only "$base" "$head" | grep -c 'docs/E2E_VERIFICATION.md' || true)
+          if [ "$changed" -eq 0 ]; then
+            echo "FAIL: PR is labeled 'behavior-change' but docs/E2E_VERIFICATION.md was not updated."
+            exit 1
+          fi
+          echo "OK: docs/E2E_VERIFICATION.md updated in this PR."
+
+  # ============================================================
+  # JOB 5: GitHub Pages Smoke Check
+  # ============================================================
+  pages-smoke-check:
+    name: GitHub Pages Smoke Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify docs/index.html exists
+        run: |
+          [ -f docs/index.html ] && echo "OK: docs/index.html found." || { echo "FAIL: missing."; exit 1; }
+
+      - name: Verify required nav sections in index.html
+        run: |
+          required_sections=("Start Here" "Roles" "Templates" "Verification" "AI Chat" "Agent Roster")
+          failed=0
+          for section in "${required_sections[@]}"; do
+            if grep -q "$section" docs/index.html; then
+              echo "OK: nav section found: $section"
+            else
+              echo "FAIL: nav section missing: $section"
+              failed=$((failed + 1))
+            fi
+          done
+          [ "$failed" -eq 0 ]
