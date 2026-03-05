@@ -1,0 +1,13 @@
+tradition,occasion,template_type,segments
+jewish,general,guided_structured,"text|May this blessing be offered;slot|onBehalfOf;slot|living;slot|deceased;text|and bring peace."
+jewish,living,guided_structured,"text|May this prayer rise;slot|onBehalfOf;slot|living;text|for healing and strength."
+jewish,deceased,guided_structured,"text|May this memorial prayer be lifted;slot|onBehalfOf;slot|deceased;text|with remembrance and mercy."
+catholic,general,guided_structured,"text|This offering is placed;slot|onBehalfOf;slot|living;slot|deceased;text|within the prayer of the day."
+catholic,living,guided_structured,"text|This intercession is offered;slot|onBehalfOf;slot|living;text|for grace and protection."
+catholic,deceased,guided_structured,"text|This memorial prayer is offered;slot|onBehalfOf;slot|deceased;text|for rest and remembrance."
+zoroastrian,general,guided_structured,"text|May this devotion be carried;slot|onBehalfOf;slot|living;slot|deceased;text|with light and good purpose."
+zoroastrian,living,guided_structured,"text|May this blessing be offered;slot|onBehalfOf;slot|living;text|for strength and right mind."
+zoroastrian,deceased,guided_structured,"text|May this remembrance be spoken;slot|onBehalfOf;slot|deceased;text|with honor and peace."
+buddhist,general,guided_structured,"text|May the merit of this practice be shared;slot|onBehalfOf;slot|living;slot|deceased;text|for the benefit of all."
+buddhist,living,guided_structured,"text|May this chant be dedicated;slot|onBehalfOf;slot|living;text|for well-being and calm."
+buddhist,deceased,guided_structured,"text|May this remembrance be dedicated;slot|onBehalfOf;slot|deceased;text|with compassion and release."

@@ -1,0 +1,16 @@
+tradition,event_id,label,category,start_rule,end_rule,notification_default
+jewish,jw_shema,Shema Window,window,sunrise,sunrise_plus_3_seasonal_hours,true
+jewish,jw_shacharit,Shacharit Window,window,sunrise,sunrise_plus_4_seasonal_hours,true
+jewish,jw_mincha,Mincha Window,window,solar_noon_plus_30m,sunset,true
+jewish,jw_maariv,Maariv Window,window,sunset_plus_40m,end_of_day,true
+catholic,ct_office,Office of Readings,window,05:00,sunrise_minus_30m,true
+catholic,ct_morning,Morning Prayer,window,sunrise_minus_30m,09:00,true
+catholic,ct_daytime,Daytime Prayer,window,12:00,15:00,true
+catholic,ct_evening,Evening Prayer,window,sunset_plus_15m,21:00,true
+zoroastrian,zo_havan,Havan Gah,window,sunrise,solar_noon,true
+zoroastrian,zo_rapithwin,Rapithwin Gah,window,solar_noon,solar_noon_plus_3h,true
+zoroastrian,zo_uziran,Uziran Gah,window,solar_noon_plus_3h,sunset,true
+zoroastrian,zo_aiwisruthrem,Aiwisruthrem Gah,window,sunset,23:59,true
+buddhist,bd_morning,Morning Practice,window,sunrise_minus_30m,08:00,true
+buddhist,bd_midday,Midday Mindfulness,window,12:00,13:00,true
+buddhist,bd_evening,Evening Chanting,window,sunset_plus_20m,21:00,true

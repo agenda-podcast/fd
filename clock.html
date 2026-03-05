@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sacred Time Clock</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="toolbar panel">
+      <div>
+        <h1>Sacred Time Clock</h1>
+        <div id="locationLabel" class="muted">Location: New York City</div>
+      </div>
+      <div class="controls">
+        <label>
+          Tradition
+          <select id="traditionSelect"></select>
+        </label>
+        <label>
+          Location
+          <input id="locationInput" type="text" value="40.7128,-74.0060" aria-label="latitude,longitude">
+        </label>
+        <button id="applyLocationBtn" type="button">Apply</button>
+      </div>
+    </header>
+
+    <main class="grid">
+      <section class="panel dial-panel">
+        <div class="section-title" id="sectionTitleNow">Now</div>
+        <div class="dial-shell">
+          <div class="slot top-medallion" id="slot_top_medallion"></div>
+          <div class="slot top-row top-row-1" id="slot_top_row_1"></div>
+          <div class="slot top-row top-row-2" id="slot_top_row_2"></div>
+          <div class="slot top-row top-row-3" id="slot_top_row_3"></div>
+          <div class="dial-face">
+            <div class="digital-clock" id="digitalClock">00:00:00</div>
+            <div class="slot center-row center-row-1" id="slot_center_row_1"></div>
+            <div class="slot center-row center-row-2" id="slot_center_row_2"></div>
+          </div>
+          <div class="slot bottom-row bottom-row-1" id="slot_bottom_row_1"></div>
+          <div class="slot bottom-row bottom-row-2" id="slot_bottom_row_2"></div>
+          <div class="slot bottom-row bottom-row-3" id="slot_bottom_row_3"></div>
+          <div class="slot bottom-medallion" id="slot_bottom_medallion"></div>
+        </div>
+      </section>
+
+      <section class="panel info-panel">
+        <div class="section-title" id="sectionTitleTiming">Sacred Timing</div>
+        <div id="timingSummary" class="stack"></div>
+        <div class="section-title" id="sectionTitleAlerts">Alerts</div>
+        <div id="alertsSummary" class="stack"></div>
+      </section>
+
+      <section class="panel builder-panel">
+        <div class="section-title" id="sectionTitleBuilder">Guided Recitation</div>
+        <div class="form-grid">
+          <label>
+            Occasion
+            <select id="occasionSelect"></select>
+          </label>
+          <label>
+            On behalf of
+            <input id="onBehalfInput" type="text" placeholder="Optional name">
+          </label>
+          <label>
+            For the living
+            <input id="livingInput" type="text" placeholder="Comma separated names">
+          </label>
+          <label>
+            For the departed
+            <input id="deceasedInput" type="text" placeholder="Comma separated names">
+          </label>
+        </div>
+        <div class="button-row">
+          <button id="buildTextBtn" type="button">Build Text</button>
+        </div>
+        <div id="formHints" class="muted"></div>
+        <div id="builtText" class="built-text"></div>
+      </section>
+    </main>
+  </div>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

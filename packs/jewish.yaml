@@ -1,0 +1,47 @@
+pack:
+  pack_id: "jewish"
+  tradition_family: "jewish"
+  display_title: "Jewish Sacred Time"
+  global_invariants:
+    time_format: "24h"
+    single_location_per_profile: true
+    local_digital_clock_required: true
+
+theme:
+  color_tokens:
+    color1: "#0a0f1f"
+    color2: "#f5f1d8"
+    color3: "#16233a"
+    color4: "#d4af37"
+    color5: "#556b8a"
+    color6: "#c14953"
+
+celestial_profile:
+  focus: "Zmanim windows"
+
+dial_layout:
+  reserved_slots:
+    - "local_digital_clock"
+  allowed_positions:
+    - "top_medallion"
+    - "bottom_medallion"
+    - "top_row_1"
+    - "top_row_2"
+    - "top_row_3"
+    - "center_row_1"
+    - "center_row_2"
+    - "bottom_row_1"
+    - "bottom_row_2"
+    - "bottom_row_3"
+
+mention_policy:
+  slots:
+    - slot_id: "on_behalf_of"
+      allowed: true
+      cardinality: "single"
+    - slot_id: "living_mentions"
+      allowed: true
+      cardinality: "multiple"
+    - slot_id: "deceased_mentions"
+      allowed: true
+      cardinality: "multiple"
