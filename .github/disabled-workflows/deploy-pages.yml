@@ -1,10 +1,12 @@
 name: Deploy GitHub Pages
 
-on:
-  push:
-    branches: ["main"]
-  workflow_dispatch:
-
+# DISABLED: original GitHub Actions triggers commented out.
+# on:
+#   push:
+#     branches: ["main"]
+#   workflow_dispatch:
+# 
+on: {}
 permissions:
   contents: read
   pages: write
